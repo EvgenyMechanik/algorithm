@@ -43,7 +43,7 @@ static void fast_union(ifstream& f, int* arr, int length)
 	}
 }
 
-static void weighted_fast_unit(ifstream& f, int* arr, int* v, int length)
+static void weighted_fast_union(ifstream& f, int* arr, int* v, int length)
 {
 	int p, q, i, j;
 	while(f >> p >> q) {
@@ -69,7 +69,34 @@ static void weighted_fast_unit(ifstream& f, int* arr, int* v, int length)
 	}
 }
 
-static void half_path_weighted_fast_unit(ifstream& f, int* arr, int* v, int length)
+static void heighted_fast_union(ifstream& f, int* arr, int* h, int length)
+{
+	int p, q, i, j;
+	while(f >> p >> q) {
+		if(p >= length || q >= length) {
+			cout << "Invalid input (" << p << "," << q << ")," << " out of range(" << length << ")" << endl;
+			continue;
+		}
+
+		for(i = p; i != arr[i]; i = arr[i]);
+		for(j = q; j != arr[j]; j = arr[j]);
+
+		if(i == j)
+			continue;
+		
+		if(h[i] < h[j]) {
+			arr[i] = arr[j];
+		} else if(h[i] > h[j]) {
+			arr[j] = arr[i];
+		} else {
+			arr[i] = arr[j];
+			h[j]++;
+		}
+		cout << p << " " << q << endl;
+	}
+}
+
+static void weighted_fast_union_half_path_compression(ifstream& f, int* arr, int* v, int length)
 {
 	int p, q, i, j;
 	while(f >> p >> q) {
@@ -93,6 +120,39 @@ static void half_path_weighted_fast_unit(ifstream& f, int* arr, int* v, int leng
 			arr[j] = arr[i];
 			v[i] += v[j];
 		}
+		cout << p << " " << q << endl;
+	}
+}
+
+static void weighted_fast_union_full_path_compression(ifstream& f, int* arr, int* v, int length)
+{
+	int p, q, i, j;
+	while(f >> p >> q) {
+		if(p >= length || q >= length) {
+			cout << "Invalid input (" << p << "," << q << ")," << " out of range(" << length << ")" << endl;
+			continue;
+		}
+
+		for(i = p; i != arr[i]; i = arr[i]);
+		for(j = q; j != arr[j]; j = arr[j]);
+
+		if(i == j)
+			continue;
+		
+		if(v[i] <= v[j]) {
+			arr[i] = arr[j];
+			v[j] += v[i];
+			/* arr[j] is a new root */
+			for(i = p; i != arr[i]; i = arr[i])
+				arr[i] = arr[j];
+		} else {
+			arr[j] = arr[i];
+			v[i] += v[j];
+			/* arr[i] is a new root */
+			for(j = p; j != arr[j]; j = arr[j])
+				arr[j] = arr[i];
+		}
+
 		cout << p << " " << q << endl;
 	}
 }
@@ -145,17 +205,30 @@ int main(int argc, char** argv)
 	prepare(file, arr, v, length);
 	fast_find(file, arr, length);
 	cout << endl;
+
 	cout << "Fast union:" << endl;
 	prepare(file, arr, v, length);
 	fast_union(file, arr, length);
 	cout << endl;
+
 	cout << "Fast weighted union:" << endl;
 	prepare(file, arr, v, length);
-	weighted_fast_unit(file, arr, v, length);
+	weighted_fast_union(file, arr, v, length);
 	cout << endl;
-	cout << "Fast weighted union with half path:" << endl;
+
+	cout << "Fast heighted union:" << endl;
 	prepare(file, arr, v, length);
-	half_path_weighted_fast_unit(file, arr, v, length);
+	heighted_fast_union(file, arr, v, length);
+	cout << endl;	
+
+	cout << "Fast weighted union with half path compression:" << endl;
+	prepare(file, arr, v, length);
+	weighted_fast_union_half_path_compression(file, arr, v, length);
+	cout << endl;
+
+	cout << "Fast weighted union with full path compression:" << endl;
+	prepare(file, arr, v, length);
+	weighted_fast_union_full_path_compression(file, arr, v, length);
 	cout << endl;
 
 	delete[] arr;
