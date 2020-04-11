@@ -1,19 +1,19 @@
-#include <iostream>
-using namespace std;
+#include <search.h>
 
-template <class T>
-int binary_search(const T* arr, const T v, int l, int r)
+template<class T>
+int binary_search(const T* arr, const int l, const int r, const int v)
 {
-	T m;
+	int m;
 	while(l <= r) {
 		m = (l + r) / 2;
 		if(v < arr[m])
 			r = m - 1;
 		else if(v > arr[m])
 			l = m + 1;
-		else 
+		else
 			return m;
 	}
 
 	return -1;
 }
+
