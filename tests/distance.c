@@ -7,7 +7,7 @@
 
 #include <list.h>
 
-#define N 100000
+#define N 1000
 #define d 0.01
 
 typedef struct point {
@@ -79,7 +79,7 @@ static int fast_d_point_count(const point* arr)
 						count++;
 				}
 			}
-		list_add_tail(&(list[X][Y].node), &newnode->node);			
+		list_add_head(&(list[X][Y].node), &newnode->node);			
 	}
 
 finish:

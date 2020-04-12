@@ -1,7 +1,7 @@
 #include <list.h>
 #include<stdlib.h>
 
-void list_add_tail(listhead* head, listhead* node)
+void list_add_head(listhead* head, listhead* node)
 {
 	node->next = head->next;
 	node->prev = head;
@@ -9,7 +9,7 @@ void list_add_tail(listhead* head, listhead* node)
 	head->next = node;
 }
 
-void list_add_head(listhead* head, listhead* node)
+void list_add_tail(listhead* head, listhead* node)
 {
 	node->next = head;
 	node->prev = head->prev;
@@ -17,7 +17,7 @@ void list_add_head(listhead* head, listhead* node)
 	head->prev = node;
 }
 
-listhead* list_remove_tail(listhead* head)
+listhead* list_remove_head(listhead* head)
 {
 	listhead* r = head->next;
 	head->next = head->next->next;
@@ -26,7 +26,7 @@ listhead* list_remove_tail(listhead* head)
 	return r; 
 }
 
-listhead* list_remove_head(listhead* head)
+listhead* list_remove_tail(listhead* head)
 {
 	listhead* r = head->prev;
 	head->prev = head->prev->prev;

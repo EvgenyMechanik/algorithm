@@ -20,7 +20,7 @@
 		listhead* v; \
 		if(stack->head.next == &stack->head) \
 			return false; \
-		v = list_remove_head(&stack->head); \
+		v = list_remove_tail(&stack->head); \
 		type##_stack* i = container_of(v, type##_stack, head); \
 		*val = i->item; \
 		free(i); \
@@ -33,7 +33,7 @@
 			return false; \
 		n->item = *val; \
 		INIT_LIST_HEAD(n->head); \
-		list_add_head(&stack->head, &n->head); \
+		list_add_tail(&stack->head, &n->head); \
 		return true; \
 	} \
 	bool type##_stack_is_empty(type##_stack* stack) \
