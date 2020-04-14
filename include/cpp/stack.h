@@ -1,6 +1,8 @@
 #ifndef _STACK_H
 #define _STACK_H
 
+#include <stdexcept>
+
 template <class T, int N>
 class AStack
 {
@@ -73,7 +75,7 @@ public:
 			nn = new node(NULL, n->item);
 			if(!nn) {
 				clear();
-				return *this;
+				throw std::runtime_error("Failed to allocate memory");
 			}
 			if(!top) {
 				top = last = nn;

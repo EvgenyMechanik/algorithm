@@ -1,6 +1,9 @@
 #ifndef _DEQ_H
 #define _DEQ_H
 
+#include <stdexcept>
+
+
 template <class T, int N>
 class ADeq
 {
@@ -14,7 +17,7 @@ public:
 	bool insert_head(const T& i)
 	{
 		if(cnt == N)
-			return false;		
+			return false;
 		arr[first] = i;
 		first = (first > 0 ? first - 1 : N - 1);
 		cnt++;
@@ -93,10 +96,10 @@ public:
 		while(n) {
 			if(!insert_tail(n->item)) {
 				clear();
-				return *this;
+				throw std::runtime_error("Failed to allocate memory");
 			}
 			n = n->next;
-		}		
+		}
 		return *this;
 	}
 	bool insert_tail(const T& i)
@@ -111,7 +114,7 @@ public:
 			last = n;
 		}
 		cnt++:
-		return true;		
+		return true;
 	}
 	bool insert_head(const T& i)
 	{
@@ -125,7 +128,7 @@ public:
 			first = n;
 		}
 		cnt++;
-		return true;	
+		return true;
 	}
 	bool remove_tail(T& i)
 	{

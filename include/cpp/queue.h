@@ -1,6 +1,8 @@
 #ifndef _QUEUE_H
 #define _QUEUE_H
 
+#include <stdexcept>
+
 template <class T, int N>
 class AQueue
 {
@@ -75,7 +77,7 @@ public:
 		while(n) {
 			if(!insert(n->item)) {
 				clear();
-				return *this;
+				throw std::runtime_error("Failed to allocate memory");
 			}
 			n = n->next;
 		}		
