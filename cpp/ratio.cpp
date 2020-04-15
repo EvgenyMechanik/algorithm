@@ -101,6 +101,6 @@ Ratio& operator/=(const Ratio&)
 
 std::ostream& operator<<(std::ostream& os, const Ratio& r)
 {
-	os << "(" << r.q << "/" << r.d << ")" << std::endl;
+	os << ((r.q < 0 || r.d < 0) ? "-" : "+") << "(" << r.q << "/" << r.d << ")" << std::endl;
 	return os;
 }
