@@ -5,7 +5,7 @@
 #include <string.h>
 #include <stddef.h>
 
-#include <list.h>
+#include <c/list.h>
 
 #define N 1000
 #define d 0.01

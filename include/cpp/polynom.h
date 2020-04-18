@@ -2,7 +2,7 @@
 #define _POLYNOM_H
 
 #include <stdexcept>
-#include <ratio.h>
+#include <cpp/ratio.h>
 
 class APolynom
 {
@@ -12,7 +12,7 @@ private:
 public:
 	~APolynom() { delete[] arr; };	
 	APolynom(Ratio v, int ss);
-	APolynom(Ratio* va, int ss);
+	APolynom(const std::initializer_list<Ratio>&);
 	APolynom(const APolynom& ap);
 	APolynom& operator=(const APolynom& ap);
 	APolynom operator+(const APolynom& ap);
@@ -29,4 +29,4 @@ public:
 	friend std::ostream& operator<<(std::ostream&, const APolynom&);
 };
 
-#endif /* _POLYNOM_H
+#endif /* _POLYNOM_H */

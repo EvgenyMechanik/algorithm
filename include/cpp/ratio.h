@@ -24,7 +24,7 @@ public:
 	Ratio& operator/=(const Ratio&); 
 	inline int getQ() const { return q; };
 	inline int getD() const { return d; };
-	inline operator float() const { return (float)q / d };
+	inline operator float() const { return (float)q / d; };
 	friend std::ostream& operator<<(std::ostream&, const Ratio&);
 };
 

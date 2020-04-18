@@ -1,4 +1,4 @@
-#include <ratio.h>
+#include <cpp/ratio.h>
 #include <stdexcept>
 
 int Ratio::nod(int b, int l)
@@ -25,7 +25,7 @@ Ratio::Ratio(int qq, int dd)
 	q = qq;
 	d = dd;
 	if(!d)
-		throw std::runtime_error("Ratio divisor set to zero")
+		throw std::runtime_error("Ratio divisor set to zero");
 	if(q)
 		evaluate();
 } 
@@ -74,7 +74,7 @@ Ratio Ratio::operator*(const Ratio& x)
 	return result; 
 }
 
-Ratio& operator*=(const Ratio&)
+Ratio& Ratio::operator*=(const Ratio& x)
 {
 	q *= x.q;
 	d *= x.d;
@@ -82,7 +82,7 @@ Ratio& operator*=(const Ratio&)
 	return *this; 
 }
 
-Ratio operator/(const Ratio&)
+Ratio Ratio::operator/(const Ratio& x)
 {
 	Ratio result = *this;
 	result.q *= x.d;
@@ -91,7 +91,7 @@ Ratio operator/(const Ratio&)
 	return result; 
 }
 
-Ratio& operator/=(const Ratio&)
+Ratio& Ratio::operator/=(const Ratio& x)
 {
 	q *= x.d;
 	d *= x.q;

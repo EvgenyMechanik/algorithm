@@ -1,4 +1,5 @@
-#include <polynom.h>
+#include <cpp/polynom.h>
+
 
 APolynom::APolynom(Ratio v, int ss)
 {		
@@ -9,14 +10,14 @@ APolynom::APolynom(Ratio v, int ss)
 	arr[s] = v;
 }
 
-APolynom::APolynom(Ratio* va, int ss)
+APolynom::APolynom(const std::initializer_list<Ratio>& va)
 {
-	s = ss;
+	s = va.size() - 1;
 	arr = new Ratio[s + 1];
 	if(!arr)
 		throw std::runtime_error("Failed to allocate memory");	
-	for(int i = 0; i <= s; i++)
-		arr[i] = va[i]; 
+	for(auto i = va.begin(); i != va.end(); i++, arr++)
+		*arr = *i; 
 }
 
 APolynom::APolynom(const APolynom& ap)
@@ -41,7 +42,7 @@ APolynom& APolynom::operator=(const APolynom& ap)
 
 APolynom APolynom::operator+(const APolynom& ap)
 {
-	APolynom result(0, ap.s > s ? ap.s : s);
+	APolynom result(Ratio(0, 1), ap.s > s ? ap.s : s);
 	for(int i = 0; i <= s; i++)
 		result.arr[i] = arr[i];
 	for(int i = 0; i <= ap.s; i++)
@@ -57,7 +58,7 @@ APolynom& APolynom::operator+=(const APolynom& ap)
 
 APolynom APolynom::operator-(const APolynom& ap)
 {
-	APolynom result(0, ap.s > s ? ap.s : s);
+	APolynom result(Ratio(0, 1), ap.s > s ? ap.s : s);
 	for(int i = 0; i <= s; i++)
 		result.arr[i] = arr[i];
 	for(int i = 0; i <= ap.s; i++)
@@ -73,10 +74,10 @@ APolynom& APolynom::operator-=(const APolynom& ap)
 
 APolynom APolynom::operator*(const APolynom& ap)
 {
-	APolynom result(0, ap.s + s);
+	APolynom result(Ratio(0, 1), ap.s + s);
 	for(int i = 0; i <= s; i++)
 		for(int j = 0; j <= s; j++)
-			result[i + j] += arr[i] * ap.arr[j];
+			result.arr[i + j] += arr[i] * ap.arr[j];
 	return result;
 }
 
@@ -88,12 +89,12 @@ APolynom& APolynom::operator*=(const APolynom& ap)
 
 APolynom APolynom::operator/(const APolynom& ap)
 {
-	APolynom result(0, 0), y(0, 0), x = *this;
+	APolynom result(Ratio(0, 1), 0), y(Ratio(0, 1), 0), x = *this;
 	while(x.s >= ap.s) {
-		y = APolynom(x.arr[i] / ap.arr[i], x.s - ap.s);
+		y = APolynom(x.arr[x.s] / ap.arr[ap.s], x.s - ap.s);
 		result += y;
 		y *= ap;
-		x.s -= y;
+		x -= y;
 	}
 	return result;	
 }
@@ -106,17 +107,17 @@ APolynom& APolynom::operator/=(const APolynom& ap)
 
 APolynom APolynom::differential()
 {
-	APolynom(0, s - 1);
+	APolynom result(Ratio(0, 1), s - 1);
 	for(int i = s; i > 0; i--)
-		result.arr[i - 1] = arr[i] * i;
+		result.arr[i - 1] = arr[i] * Ratio(i, 1);
 	return result;
 }
 
 APolynom APolynom::integral()
 {
-	APolynom result(0, s + 1);
+	APolynom result(Ratio(0, 1), s + 1);
 	for(int i = 0; i <= s; i++)
-		result.arr[i + 1] = arr[i] / (i + 1);
+		result.arr[i + 1] = arr[i] / Ratio(i + 1, 1);
 	return result;
 }
 
@@ -131,5 +132,6 @@ float APolynom::evaluate(float val)
 std::ostream& operator<<(std::ostream& os, const APolynom& ap)
 {	
 	for(int i = ap.s; i >= 0; i--)
-		cout << arr[i] << "x^" << ap.s;
+		os << ap.arr[i] << "x^" << ap.s;
+	return os;
 }
