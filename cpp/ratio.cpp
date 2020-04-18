@@ -5,19 +5,21 @@ int Ratio::nod(int b, int l)
 {
 	if(b % l == 0)
 		return l;
-	return nod(l, b / l);
+	return nod(l, b % l);
 }
 
 void Ratio::evaluate()
 {
-	int n, qq = (q >= 0 ? q : -q), dd = (d > 0 ? d : -d);
+	int n, qq = (q > 0 ? q : -q), dd = (d > 0 ? d : -d);
+	if(!q)
+		return;
 	n = (qq > dd ? nod(qq, dd) : nod(dd, qq));
 	q /= n;
 	d /= n;
-	if(q < 0 && d < 0) {
+	if(d < 0) {
 		q = -q;
 		d = -d;
-	}
+	} 
 }
 
 Ratio::Ratio(int qq, int dd)
@@ -26,8 +28,7 @@ Ratio::Ratio(int qq, int dd)
 	d = dd;
 	if(!d)
 		throw std::runtime_error("Ratio divisor set to zero");
-	if(q)
-		evaluate();
+	evaluate();
 } 
 
 Ratio Ratio::operator+(const Ratio& x)
@@ -101,6 +102,10 @@ Ratio& Ratio::operator/=(const Ratio& x)
 
 std::ostream& operator<<(std::ostream& os, const Ratio& r)
 {
-	os << ((r.q < 0 || r.d < 0) ? "-" : "+") << "(" << r.q << "/" << r.d << ")" << std::endl;
+	os << (r.q < 0 ? "-" : "+");
+	os << (r.d !=1 ? "(" : "");
+	os << (r.q < 0 ? -r.q : r.q);
+	if(r.d != 1) 
+		os << "/" << r.d << ")"; 
 	return os;
 }

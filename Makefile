@@ -1,7 +1,8 @@
-ROOT_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
+export ROOT_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 export CFLAGS := -I$(ROOT_DIR)/include
 export CXXFLAGS := -I$(ROOT_DIR)/include
 export LDFLAGS := -L$(ROOT_DIR)/c -L$(ROOT_DIR)/cpp
+
 
 SUBDIRS = c cpp tests
 

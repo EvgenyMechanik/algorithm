@@ -1,6 +1,5 @@
 #include <cpp/polynom.h>
 
-
 APolynom::APolynom(Ratio v, int ss)
 {		
 	s = ss;
@@ -12,12 +11,13 @@ APolynom::APolynom(Ratio v, int ss)
 
 APolynom::APolynom(const std::initializer_list<Ratio>& va)
 {
+	int i = 0;
 	s = va.size() - 1;
 	arr = new Ratio[s + 1];
 	if(!arr)
 		throw std::runtime_error("Failed to allocate memory");	
-	for(auto i = va.begin(); i != va.end(); i++, arr++)
-		*arr = *i; 
+	for(auto r = va.begin(); r != va.end(); r++, i++) 
+		arr[i] = *r; 
 }
 
 APolynom::APolynom(const APolynom& ap)
@@ -124,14 +124,16 @@ APolynom APolynom::integral()
 float APolynom::evaluate(float val)
 {	
 	float result = arr[s];
-	for(int i = s - 1; i > 0; i--)
-		result += result * val + arr[i - 1];
+	for(int i = s; i > 0; i--)
+		result = result * val + (float)arr[i - 1];	
 	return result;
 }
 
 std::ostream& operator<<(std::ostream& os, const APolynom& ap)
 {	
-	for(int i = ap.s; i >= 0; i--)
-		os << ap.arr[i] << "x^" << ap.s;
+	for(int i = ap.s; i > 0; i--)
+		if(ap.arr[i])
+			os << ap.arr[i] << "x^" << i;
+	os << ap.arr[0]; 
 	return os;
 }
