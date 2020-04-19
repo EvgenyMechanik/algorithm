@@ -346,17 +346,39 @@ LPolynom& LPolynom::operator/=(const LPolynom& lp)
 
 LPolynom LPolynom::differential()
 {
-	return LPolynom();
+	LPolynom result;
+	node *n = first;
+	while(n) {
+		if(n->item.s - 1 >= 0)
+			result += LPolynom(n->item.r * Ratio(n->item.s, 1), n->item.s - 1); 
+		n = n->next;
+	}
+	return result;
 }
 
 LPolynom LPolynom::integral()
 {
-	return LPolynom();
+	LPolynom result;
+	node *n = first;
+	while(n) {
+		result += LPolynom(n->item.r / Ratio(n->item.s + 1, 1), n->item.s + 1);
+		n = n->next;
+	}
+	return result;
 }
 
 float LPolynom::evaluate(float val)
 {
-	return 0;
+	/* last is always valid, because default constructor private */
+	float result = last->item.r;
+	node *n = last;
+	while(n) {
+		for(int i = 0; i < n->item.s - (n->prev ? n->prev->item.s : 0); i++)
+			result *= val;
+		result += (n->prev ? (float)n->prev->item.r : 0);
+		n = n->prev;
+	}
+	return result;
 }
 
 std::ostream& operator<<(std::ostream& os, const LPolynom& lp)
