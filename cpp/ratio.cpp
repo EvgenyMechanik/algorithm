@@ -100,6 +100,17 @@ Ratio& Ratio::operator/=(const Ratio& x)
 	return *this; 
 }
 
+Ratio Ratio::operator-()
+{
+	Ratio result = *this;
+	result.q = -result.q;
+	if(result.q < 0 && result.d < 0) {
+		result.q = -result.q;
+		result.d = -result.d;
+	}
+	return result; 
+}
+
 std::ostream& operator<<(std::ostream& os, const Ratio& r)
 {
 	os << (r.q < 0 ? "-" : "+");

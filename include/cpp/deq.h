@@ -107,7 +107,7 @@ public:
 		node* n = new node(last, NULL, i);
 		if(!n)
 			return false;
-		if(first) {
+		if(!first) {
 			first = last = n;
 		} else {
 			last->next = n;
@@ -121,7 +121,7 @@ public:
 		node* n = new node(NULL, first, i);
 		if(!n)
 			return false;
-		if(first) {
+		if(!first) {
 			first = last = n;
 		} else {
 			first->prev = n;

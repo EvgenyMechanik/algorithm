@@ -41,7 +41,7 @@ private:
 	struct node {
 		node* next;
 		T item;
-		node(const node* n, const T& i) { next = n; itme = i; };
+		node(const node* n, const T& i) { next = n; item = i; };
 	};
 private:
 	node* first;

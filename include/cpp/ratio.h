@@ -22,6 +22,7 @@ public:
 	Ratio& operator*=(const Ratio&);
 	Ratio operator/(const Ratio&);
 	Ratio& operator/=(const Ratio&); 
+	Ratio operator-();
 	inline int getQ() const { return q; };
 	inline int getD() const { return d; };
 	inline operator float() const { return (float)q / d; };
