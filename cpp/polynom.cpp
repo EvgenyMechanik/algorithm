@@ -45,6 +45,18 @@ APolynom& APolynom::operator=(const APolynom& ap)
 	return *this;
 }
 
+APolynom APolynom::delproc(const APolynom& ap, const bool del)
+{
+	APolynom r(Ratio(0, 1), 0), y(Ratio(0, 1), 0), x = *this;
+	while(x.s >= ap.s) {
+		y = APolynom(x.arr[x.s] / ap.arr[ap.s], x.s - ap.s);
+		r += y;
+		y *= ap;
+		x -= y;
+	}
+	return (del ? r : x);	
+}
+
 APolynom APolynom::operator+(const APolynom& ap)
 {
 	APolynom result(Ratio(0, 1), ap.s > s ? ap.s : s);
@@ -95,19 +107,23 @@ APolynom& APolynom::operator*=(const APolynom& ap)
 
 APolynom APolynom::operator/(const APolynom& ap)
 {
-	APolynom result(Ratio(0, 1), 0), y(Ratio(0, 1), 0), x = *this;
-	while(x.s >= ap.s) {
-		y = APolynom(x.arr[x.s] / ap.arr[ap.s], x.s - ap.s);
-		result += y;
-		y *= ap;
-		x -= y;
-	}
-	return result;	
+	return delproc(ap, true);
 }
 
 APolynom& APolynom::operator/=(const APolynom& ap)
 {
 	*this = *this / ap;
+	return *this;
+}
+
+APolynom APolynom::operator%(const APolynom& ap)
+{
+	return delproc(ap, false);
+}
+
+APolynom& APolynom::operator%=(const APolynom& ap)
+{
+	*this = *this % ap;
 	return *this;
 }
 
@@ -187,6 +203,18 @@ void LPolynom::clear()
 		delete d;
 	}
 	last = NULL;
+}
+
+LPolynom LPolynom::delproc(const LPolynom& lp, const bool del)
+{
+	LPolynom r, y, x = *this; 
+	while(x.last->item.s >= lp.last->item.s) {
+		y = LPolynom(x.last->item.r / lp.last->item.r, x.last->item.s - lp.last->item.s);
+		r += y;
+		y *= lp;
+		x -= y;
+	}
+	return (del ? r : x);	
 }
 
 LPolynom LPolynom::plus_minus(const LPolynom& lp, const bool plus)
@@ -328,19 +356,23 @@ LPolynom& LPolynom::operator*=(const LPolynom& lp)
 
 LPolynom LPolynom::operator/(const LPolynom& lp)
 {
-	LPolynom result, y, x = *this; 
-	while(x.last->item.s >= lp.last->item.s) {
-		y = LPolynom(x.last->item.r / lp.last->item.r, x.last->item.s - lp.last->item.s);
-		result += y;
-		y *= lp;
-		x -= y;
-	}
-	return result;	
+	return delproc(lp, true);
 }
 
 LPolynom& LPolynom::operator/=(const LPolynom& lp)
 {
 	*this = *this / lp;
+	return *this;
+}
+
+LPolynom LPolynom::operator%(const LPolynom& lp)
+{
+	return delproc(lp, false);
+}
+
+LPolynom& LPolynom::operator%=(const LPolynom& lp)
+{
+	*this = *this % lp;
 	return *this;
 }
 

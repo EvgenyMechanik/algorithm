@@ -44,6 +44,7 @@ int main()
 				  << ap4 << std::endl << ap5 << std::endl << ap1 + ap2 << std::endl
 				  << ap1 - ap2 << std::endl << ap1 * ap2 << std::endl
 				  << ap1 / ap2 << std::endl << ap3 / ap4 << std::endl
+				  << ap1 % ap2 << std::endl << ap3 % ap4 << std::endl
 		          << ap3 - ap5 << std::endl << ap5 - ap3 << std::endl
 		          << ap1.differential() << std::endl << ap2.differential() << std::endl
 		          << ap1.integral() << std::endl << ap2.integral() << std::endl
@@ -54,6 +55,7 @@ int main()
 				  << lp4 << std::endl << lp5 << std::endl << lp1 + lp2 << std::endl
 				  << lp1 - lp2 << std::endl << lp1 * lp2 << std::endl
 				  << lp1 / lp2 << std::endl << lp3 / lp4 << std::endl
+				  << lp1 % lp2 << std::endl << lp3 % lp4 << std::endl
 				  << lp3 - lp5 << std::endl << lp5 - lp3 << std::endl
 				  << lp1.differential() << std::endl << lp2.differential() << std::endl
 				  << lp1.integral() << std::endl << lp2.integral() << std::endl

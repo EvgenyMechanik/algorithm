@@ -12,6 +12,7 @@ private:
 	int s;
 private:
 	APolynom() { arr = NULL; s = -1; };
+	APolynom delproc(const APolynom& ap, const bool del);
 public:
 	~APolynom() { delete[] arr; };	
 	APolynom(const Ratio& v, int ss);
@@ -26,6 +27,8 @@ public:
 	APolynom& operator*=(const APolynom& ap);
 	APolynom operator/(const APolynom& ap);
 	APolynom& operator/=(const APolynom& ap);
+	APolynom operator%(const APolynom& ap);
+	APolynom& operator%=(const APolynom& ap);
 	APolynom differential();
 	APolynom integral();
 	float evaluate(float val);
@@ -51,6 +54,7 @@ private:
 private:
 	LPolynom plus_minus(const LPolynom& lp, const bool plus);
 	void clear();
+	LPolynom delproc(const LPolynom& lp, const bool del);
 	LPolynom() { first = last = NULL; };
 public:
 	~LPolynom() { clear(); };	
@@ -66,6 +70,8 @@ public:
 	LPolynom& operator*=(const LPolynom& lp);
 	LPolynom operator/(const LPolynom& lp);
 	LPolynom& operator/=(const LPolynom& lp);
+	LPolynom operator%(const LPolynom& lp);
+	LPolynom& operator%=(const LPolynom& lp);
 	LPolynom differential();
 	LPolynom integral();
 	float evaluate(float val);
