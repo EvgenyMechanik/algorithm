@@ -13,7 +13,7 @@ distance: distance.o -lalgc
 	$(CC) -o $@ $^ $(LDFLAGS) -lm -lalgc
 
 fractal: fractal.o
-	$(CC) -o $@ $^ $(LDFLAGS) -lX11
+	$(CC) -o $@ $^ $(LDFLAGS) -lX11 -lm
 
 clean:
 	rm -f  $(programs) *.o
