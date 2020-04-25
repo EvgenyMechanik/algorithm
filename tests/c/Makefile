@@ -1,4 +1,4 @@
-programs := distance fractal
+programs := distance fractal pack
 objects := $(patsubst %.c,%.o,$(wildcard *.c))
 vpath %.a $(ROOT_DIR)/c
 
@@ -14,6 +14,9 @@ distance: distance.o -lalgc
 
 fractal: fractal.o
 	$(CC) -o $@ $^ $(LDFLAGS) -lX11 -lm
+
+pack: pack.o
+	$(CC) -o $@ $^ $(LDFLAGS)
 
 clean:
 	rm -f  $(programs) *.o
