@@ -5,7 +5,7 @@
 #include <fstream>
 using namespace std;
 
-static void fast_find(ifstream& f, int* arr, int length)
+void fast_find(ifstream& f, int* arr, int length)
 {
 	int p, q, t;
 	while(f >> p >> q) {
@@ -24,7 +24,7 @@ static void fast_find(ifstream& f, int* arr, int length)
 	}
 }
 
-static void fast_union(ifstream& f, int* arr, int length)
+void fast_union(ifstream& f, int* arr, int length)
 {
 	int p, q, i, j;
 	while(f >> p >> q) {
@@ -43,7 +43,7 @@ static void fast_union(ifstream& f, int* arr, int length)
 	}
 }
 
-static void weighted_fast_union(ifstream& f, int* arr, int* v, int length)
+void weighted_fast_union(ifstream& f, int* arr, int* v, int length)
 {
 	int p, q, i, j;
 	while(f >> p >> q) {
@@ -69,7 +69,7 @@ static void weighted_fast_union(ifstream& f, int* arr, int* v, int length)
 	}
 }
 
-static void heighted_fast_union(ifstream& f, int* arr, int* h, int length)
+void heighted_fast_union(ifstream& f, int* arr, int* h, int length)
 {
 	int p, q, i, j;
 	while(f >> p >> q) {
@@ -96,7 +96,7 @@ static void heighted_fast_union(ifstream& f, int* arr, int* h, int length)
 	}
 }
 
-static void weighted_fast_union_half_path_compression(ifstream& f, int* arr, int* v, int length)
+void weighted_fast_union_half_path_compression(ifstream& f, int* arr, int* v, int length)
 {
 	int p, q, i, j;
 	while(f >> p >> q) {
@@ -124,7 +124,7 @@ static void weighted_fast_union_half_path_compression(ifstream& f, int* arr, int
 	}
 }
 
-static void weighted_fast_union_full_path_compression(ifstream& f, int* arr, int* v, int length)
+void weighted_fast_union_full_path_compression(ifstream& f, int* arr, int* v, int length)
 {
 	int p, q, i, j;
 	while(f >> p >> q) {

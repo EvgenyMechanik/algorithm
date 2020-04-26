@@ -1,4 +1,4 @@
-programs := distance fractal pack binomial
+programs := distance fractal pack binomial tree
 objects := $(patsubst %.c,%.o,$(wildcard *.c))
 vpath %.a $(ROOT_DIR)/c
 
@@ -20,6 +20,9 @@ pack: pack.o
 
 binomial: binomial.o
 	$(CC) -o $@ $^ $(LDFLAGS)
+
+tree: tree.o -lalgc
+	$(CC) -o $@ $^ $(LDFLAGS) -lX11 -lalgc
 
 clean:
 	rm -f  $(programs) *.o
