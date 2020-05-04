@@ -1,4 +1,4 @@
-programs := polynom hanoi
+programs := polynom hanoi sort
 objects := $(patsubst %.cpp,%.o,$(wildcard *.cpp))
 vpath %.a $(ROOT_DIR)/cpp
 
@@ -14,6 +14,9 @@ polynom: polynom.o -lalgcpp
 
 hanoi: hanoi.o 
 	$(CXX) -o $@ $^ $(LDFLAGS)
+
+sort: sort.o -lalgcpp
+	$(CXX) -o $@ $^ $(LDFLAGS) -lalgcpp
 
 clean:
 	rm -f  $(programs) *.o
